@@ -1,16 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Chat with AI Bot</title>
+  <meta charset="UTF-8">
+  <title>Chat with AI Bot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-title {
+      font-size: 1.5em;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .message {
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .user-message {
+      background-color: #0078d4;
+      color: white;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot-message {
+      background-color: #f1f1f1;
+      color: #333;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align: center; padding-top: 50px;">
-    <h2>Chat with AI Bot</h2>
-    <form method="POST">
-        <input type="text" name="message" placeholder="Type your message..." size="40" required>
-        <button type="submit">Send</button>
-    </form>
+<body>
+  <div class="chat-container">
+    <div class="chat-title">Chat with AI Bot</div>
+
     {% if response %}
-        <p><strong>Bot:</strong> {{ response }}</p>
+      <div class="message user-message">{{ request.form['message'] }}</div>
+      <div class="message bot-message"><strong>Bot:</strong> {{ response }}</div>
     {% endif %}
+
+    <form method="POST">
+      <input type="text" name="message" placeholder="Type your message..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </body>
 </html>
