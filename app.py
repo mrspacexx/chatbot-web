@@ -1,21 +1,35 @@
 from flask import Flask, request, render_template
 import os
+import nltk
+from nltk.tokenize import word_tokenize
+
+# Download tokenizer data (do this only once)
+nltk.download("punkt")
 
 app = Flask(__name__)
 
+# --- NEW SMART NLP-BASED RESPONSE LOGIC ---
 def chatbot_response(message):
     message = message.lower()
-    if "hello" in message or "hi" in message:
-        return "Hello! How can I assist you today?"
-    elif "weather" in message:
-        return "I heard the weather is nice today!"
-    elif "how are you" in message:
-        return "I'm just a bot, but I'm doing great! How about you?"
-    elif "bye" in message or "goodbye" in message:
-        return "Goodbye! Have a nice day!"
-    else:
-        return "I'm sorry, I didn't understand that. Could you please rephrase?"
+    tokens = word_tokenize(message)
 
+    if any(word in tokens for word in ["hello", "hi", "hey", "greetings"]):
+        return "Hello! How can I assist you today?"
+    elif "weather" in tokens:
+        return "Sure! I heard the weather is nice today!"
+    elif "time" in tokens:
+        from datetime import datetime
+        return f"The current time is {datetime.now().strftime('%H:%M')}."
+    elif "joke" in tokens:
+        return "Why don't scientists trust atoms? Because they make up everything!"
+    elif any(word in tokens for word in ["bye", "goodbye", "see you"]):
+        return "Goodbye! Have a nice day!"
+    elif any(word in tokens for word in ["how", "are", "you"]):
+        return "I'm just a bot, but I'm doing great! How about you?"
+    else:
+        return "I'm not sure I understand. Could you please rephrase?"
+
+# --- ROUTING ---
 @app.route("/", methods=["GET", "POST"])
 def home():
     response = ""
@@ -24,6 +38,7 @@ def home():
         response = chatbot_response(user_input)
     return render_template("index.html", response=response)
 
+# --- HOST SETTINGS FOR RENDER ---
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
