@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with AI Bot</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding-top: 50px;">
+    <h2>Chat with AI Bot</h2>
+    <form method="POST">
+        <input type="text" name="message" placeholder="Type your message..." size="40" required>
+        <button type="submit">Send</button>
+    </form>
+    {% if response %}
+        <p><strong>Bot:</strong> {{ response }}</p>
+    {% endif %}
+</body>
+</html>
