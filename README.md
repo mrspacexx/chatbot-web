@@ -2,6 +2,8 @@
 
 This is a simple AI-powered chatbot built with **Python**, **Flask**, and **OpenAI GPT-3.5**, developed in **PyCharm**, and deployed via **Render**. The chatbot is fully embeddable into any website, including **Squarespace**.
 
+To see elteranord.com
+
 --- 
 
 ## Features
